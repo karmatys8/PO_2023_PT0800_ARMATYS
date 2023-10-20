@@ -2,10 +2,13 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
 
+import java.util.Arrays;
+
 
 public class OptionsParser {
     public static MoveDirection[] f(String[] args) {
-        MoveDirection[] result = new MoveDirection[0];
+        MoveDirection[] newArray = new MoveDirection[args.length];
+        int idx = 0;
 
         for(String arg: args) {
             MoveDirection value = switch(arg) {
@@ -16,14 +19,11 @@ public class OptionsParser {
                 default -> null;
             };
 
-            MoveDirection[] newArray = new MoveDirection[result.length +1];
             if (value != null) {
-                System.arraycopy(result, 0, newArray, 0, result.length);
-                newArray[result.length] = value;
-                result = newArray;
+                newArray[idx++] = value;
             }
         }
 
-        return result;
+        return Arrays.copyOf(newArray, idx);
     }
 }
