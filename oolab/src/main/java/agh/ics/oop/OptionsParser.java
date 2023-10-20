@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 
 public class OptionsParser {
-    public static MoveDirection[] f(String[] args) {
+    public static MoveDirection[] readInstructions(String[] args) {
         MoveDirection[] newArray = new MoveDirection[args.length];
         int idx = 0;
 
