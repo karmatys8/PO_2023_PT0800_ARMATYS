@@ -1,15 +1,17 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.MapDirection;
 
 
 public class World {
     public static void main(String[] args) {
-        System.out.println("system wystartował");
-
-        run( OptionsParser.f(args) );
-
-        System.out.println("system zakończył działanie");
+        MapDirection direct = MapDirection.NORTH;
+        System.out.println(direct);
+        System.out.println(direct.next());
+        System.out.println(direct.previous());
+        System.out.println(direct.toUnitVector());
     }
 
     public static void run(MoveDirection[] args) {
