@@ -1,32 +1,17 @@
 package agh.ics.oop.model;
 
-public class Vector2d {
-    private final int x;
-    private final int y;
-
-    public Vector2d(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
+public record Vector2d(int x, int y) {
 
     public String toString() {
         return "(%d,%d)".formatted(x, y);
     }
 
     public boolean precedes(Vector2d other) {
-        return x <= other.x  &&  y <= other.y;
+        return x <= other.x && y <= other.y;
     }
 
     public boolean follows(Vector2d other) {
-        return x >= other.x  &&  y >= other.y;
+        return x >= other.x && y >= other.y;
     }
 
     public Vector2d add(Vector2d other) {
@@ -57,6 +42,6 @@ public class Vector2d {
 
         Vector2d that = (Vector2d) other;
 
-        return x == that.x  &&  y == that.y;
+        return x == that.x && y == that.y;
     }
 }

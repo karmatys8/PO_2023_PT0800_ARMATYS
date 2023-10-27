@@ -4,48 +4,44 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import agh.ics.oop.model.MoveDirection;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class OptionsParserTest {
     @Test
     public void testReadInstructions() {
         String[] input1 = "f r b l".split(" ");
-        MoveDirection[] result1 = {MoveDirection.FORWARD, MoveDirection.RIGHT,
+        MoveDirection[] res1 = {MoveDirection.FORWARD, MoveDirection.RIGHT,
                     MoveDirection.BACK, MoveDirection.LEFT};
+        List<MoveDirection> result1 = Arrays.asList(res1);
 
-        Assertions.assertArrayEquals(
-                OptionsParser.readInstructions(input1)
-                , result1);
-
+        Assertions.assertEquals(result1, OptionsParser.readInstructions(input1));
 
         String[] input2 = "l     l l r  l ".split(" ");
-        MoveDirection[] result2 = {MoveDirection.LEFT, MoveDirection.LEFT,
+        MoveDirection[] res2 = {MoveDirection.LEFT, MoveDirection.LEFT,
                 MoveDirection.LEFT, MoveDirection.RIGHT, MoveDirection.LEFT};
+        List<MoveDirection> result2 = Arrays.asList(res2);
 
-        Assertions.assertArrayEquals(
-                OptionsParser.readInstructions(input2)
-                , result2);
+        Assertions.assertEquals(result2, OptionsParser.readInstructions(input2));
 
 
         String[] input3 = "f bb g i _l 4 b 007".split(" ");
-        MoveDirection[] result3 = {MoveDirection.FORWARD, MoveDirection.BACK};
+        MoveDirection[] res3 = {MoveDirection.FORWARD, MoveDirection.BACK};
+        List<MoveDirection> result3 = Arrays.asList(res3);
 
-        Assertions.assertArrayEquals(
-                OptionsParser.readInstructions(input3)
-                , result3);
+        Assertions.assertEquals(result3, OptionsParser.readInstructions(input3));
 
 
         String[] input4 = "9 16 q w e rty 25 1 4".split(" ");
-        MoveDirection[] result4 = {};
+        List<MoveDirection> result4 = new ArrayList<>();
 
-        Assertions.assertArrayEquals(
-                OptionsParser.readInstructions(input4)
-                , result4);
+        Assertions.assertEquals(result4, OptionsParser.readInstructions(input4));
 
 
         String[] input5 = "".split(" ");
-        MoveDirection[] result5 = {};
+        List<MoveDirection> result5 = new ArrayList<>();
 
-        Assertions.assertArrayEquals(
-                OptionsParser.readInstructions(input5)
-                , result5);
+        Assertions.assertEquals(result5, OptionsParser.readInstructions(input5));
     }
 }
