@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public class OptionsParser {
-    public static List<MoveDirection> readInstructions(String[] args) {
+    public static List<MoveDirection> parse(String[] args) {
         List<MoveDirection> newList = new ArrayList<>();
 
         for(String arg: args) {
