@@ -3,15 +3,13 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.MapDirection;
+import agh.ics.oop.model.Animal;
 
 
 public class World {
     public static void main(String[] args) {
-        MapDirection direct = MapDirection.NORTH;
-        System.out.println(direct);
-        System.out.println(direct.next());
-        System.out.println(direct.previous());
-        System.out.println(direct.toUnitVector());
+        Animal animal1 = new Animal();
+        System.out.println(animal1);
     }
 
     public static void run(MoveDirection[] args) {
