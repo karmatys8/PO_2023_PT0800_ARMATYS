@@ -13,9 +13,9 @@ public class Simulation {
     private final List<Animal> animals = new ArrayList<>(); /* not changing implementation because most likely number of
                                                                we will most likely access indexes more often than adding new values */
     private final List<MoveDirection> moves;
-    private final WorldMap worldMap;
+    private final WorldMap<Animal, Vector2d> worldMap;
 
-    public Simulation(List<Vector2d> positions, List<MoveDirection> moves, WorldMap worldMap) {
+    public Simulation(List<Vector2d> positions, List<MoveDirection> moves, WorldMap<Animal, Vector2d> worldMap) {
         for (Vector2d position : positions) {
             Animal newAnimal = new Animal(position);
             if (worldMap.canMoveTo(position))

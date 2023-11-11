@@ -1,33 +1,30 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.Animal;
-
-import java.util.List;
+import agh.ics.oop.model.TextMap;
 
 
 public class World {
     public static void main(String[] args) {
+        TextMap textMap = new TextMap();
+        String str1 = "Ala";
+        String str2 = "ma";
+        String str3 = "sowoniedźwiedzia";
 
-    }
+        textMap.place(str1);
+        textMap.place(str2);
+        textMap.place(str3);
 
-    public static void run(MoveDirection[] args) {
-        for(int i=0; i < args.length; i++) {
-            if (i != 0) {
-                System.out.println(",");
-            }
+        System.out.println(textMap);
 
-            String message = switch(args[i]) {
-                case FORWARD -> "zwierzak idzie do przodu";
-                case BACK-> "zwierzak idzie do tyłu";
-                case RIGHT -> "zwierzak skręca w prawo";
-                case LEFT -> "zwierzak skręca w lewo";
-            };
+        textMap.move(str3, MoveDirection.RIGHT);
+        textMap.move(str3, MoveDirection.FORWARD);
 
-            System.out.print(message);
-        }
+        System.out.println(textMap);
 
-        System.out.println(); // last line doesn't have '\n'
+        textMap.move(str2, MoveDirection.LEFT);
+        textMap.move(str2, MoveDirection.BACK);
+
+        System.out.println(textMap);
     }
 }
