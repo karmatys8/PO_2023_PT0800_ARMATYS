@@ -44,4 +44,12 @@ public record Vector2d(int x, int y) {
 
         return x == that.x && y == that.y;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

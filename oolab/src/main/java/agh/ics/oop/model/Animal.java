@@ -2,13 +2,9 @@ package agh.ics.oop.model;
 
 import java.util.Objects;
 
-public class Animal {
-    private MapDirection orientation = MapDirection.NORTH;
-    private Vector2d position;
-
-    private static final Vector2d lowerLeftBoundary = new Vector2d(0, 0);
-    private static final Vector2d upperRightBoundary = new Vector2d(4, 4);
-
+public class Animal{
+    MapDirection orientation = MapDirection.NORTH;
+    Vector2d position;
 
     public Animal(Vector2d position) {
         this.position = position;
@@ -19,25 +15,29 @@ public class Animal {
     }
 
     public String toString() {
-        return position.toString() + ", " + orientation;
+        return orientation.toString();
     }
 
     public boolean isAt(Vector2d position) {
         return this.position.equals(position);
     }
 
-    private void validateMove(Vector2d newPosition) {
-        if (newPosition.precedes(upperRightBoundary) && newPosition.follows(lowerLeftBoundary)) {
-            position = newPosition;
-        }
-    }
-
-    public void move(MoveDirection direction) {
+    public void move(MoveDirection direction, MoveValidator validator) {
         switch (direction) {
             case RIGHT -> orientation = orientation.next();
             case LEFT -> orientation = orientation.previous();
-            case FORWARD -> this.validateMove(position.add(orientation.toUnitVector()));
-            case BACK -> this.validateMove(position.subtract(orientation.toUnitVector()));
+            case FORWARD -> {
+                Vector2d newPosition = position.add(orientation.toUnitVector());
+                if (validator.canMoveTo(newPosition)) {
+                    position = newPosition;
+                }
+            }
+            case BACK -> {
+                Vector2d newPosition = position.subtract(orientation.toUnitVector());
+                if (validator.canMoveTo(newPosition)) {
+                    position = newPosition;
+                }
+            }
         }
     }
 
@@ -56,5 +56,9 @@ public class Animal {
     @Override
     public int hashCode() {
         return Objects.hash(orientation, position);
+    }
+
+    public Vector2d getPosition() {
+        return position;
     }
 }
