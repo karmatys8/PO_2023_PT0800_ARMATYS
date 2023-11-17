@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RectangularMap implements WorldMap<Animal, Vector2d> {
-    Map<Vector2d, Animal> animals = new HashMap<>();
+    private final Map<Vector2d, Animal> animals = new HashMap<>();
 
-    static final Vector2d lowerLeftBoundary = new Vector2d(0, 0);
-    final Vector2d upperRightBoundary;;
+    private static final Vector2d lowerLeftBoundary = new Vector2d(0, 0);
+    private final Vector2d upperRightBoundary;;
 
     public RectangularMap(int width, int height) {
         upperRightBoundary  = new Vector2d(width - 1, height - 1);
@@ -18,8 +18,8 @@ public class RectangularMap implements WorldMap<Animal, Vector2d> {
 
     @Override
     public boolean place(Animal animal) {
-        if (canMoveTo(animal.position)) {
-            animals.put(animal.position, animal);
+        if (canMoveTo(animal.getPosition())) {
+            animals.put(animal.getPosition(), animal);
             return true;
 
         } else return false;
@@ -28,9 +28,9 @@ public class RectangularMap implements WorldMap<Animal, Vector2d> {
     @Override
     public void move(Animal animal, MoveDirection direction) {
         if (animals.containsValue(animal)) {
-            Animal animalToMove = animals.remove(animal.position);
+            Animal animalToMove = animals.remove(animal.getPosition());
             animalToMove.move(direction, (MoveValidator) this);
-            animals.put(animalToMove.position, animalToMove);
+            animals.put(animalToMove.getPosition(), animalToMove);
         }
     }
 

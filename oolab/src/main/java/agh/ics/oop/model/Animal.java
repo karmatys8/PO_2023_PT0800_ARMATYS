@@ -3,8 +3,8 @@ package agh.ics.oop.model;
 import java.util.Objects;
 
 public class Animal{
-    MapDirection orientation = MapDirection.NORTH;
-    Vector2d position;
+    private MapDirection orientation = MapDirection.NORTH;
+    private Vector2d position;
 
     public Animal(Vector2d position) {
         this.position = position;
@@ -22,7 +22,7 @@ public class Animal{
         return this.position.equals(position);
     }
 
-    public void move(MoveDirection direction, MoveValidator validator) {
+    public void move(MoveDirection direction, MoveValidator<Vector2d> validator) {
         switch (direction) {
             case RIGHT -> orientation = orientation.next();
             case LEFT -> orientation = orientation.previous();

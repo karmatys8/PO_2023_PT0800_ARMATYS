@@ -3,12 +3,9 @@ package agh.ics.oop.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.util.Arrays;
-import java.util.function.Function;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class RectangularMapTest {

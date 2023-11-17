@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 public class AnimalTest {
     @Test
     public void testOrientation() {
-        MoveValidator moveValidator = new RectangularMap(5, 5);
+        MoveValidator<Vector2d> moveValidator = new RectangularMap(5, 5);
 
         Animal animal1 = new Animal();
         Assertions.assertEquals(MapDirection.NORTH, animal1.getOrientation());
@@ -29,12 +29,12 @@ public class AnimalTest {
 
     @Test
     public void testMoving() {
-        MoveValidator moveValidator = new RectangularMap(5, 5);
+        MoveValidator<Vector2d> moveValidator = new RectangularMap(5, 5);
 
         Animal animal1 = new Animal();
-        System.out.println(animal1.position);
+        System.out.println(animal1.getPosition());
         animal1.move(MoveDirection.FORWARD, moveValidator);
-        System.out.println(animal1.position);
+        System.out.println(animal1.getPosition());
         Assertions.assertTrue(animal1.isAt(new Vector2d(2, 3)));
 
         animal1.move(MoveDirection.RIGHT, moveValidator);
@@ -54,7 +54,7 @@ public class AnimalTest {
 
     @Test
     public void testBoundaries() {
-        MoveValidator moveValidator = new RectangularMap(5, 5);
+        MoveValidator<Vector2d> moveValidator = new RectangularMap(5, 5);
 
         Animal animal1 = new Animal(new Vector2d(1, 1));
         Assertions.assertTrue(animal1.isAt(new Vector2d(1, 1)));
