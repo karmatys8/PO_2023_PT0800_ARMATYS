@@ -89,7 +89,7 @@ public class RectangularMapTest {
     }
 
     @Test
-    public void testIsObjectAt() {
+    public void testObjectAt() {
         Vector2d[] vectors = {new Vector2d(0, 0), new Vector2d(0, 7), new Vector2d(1, 0), new Vector2d(1, 7),
         new Vector2d(0, 2), new Vector2d(0, 6), new Vector2d(1, 1), new Vector2d(1, 4), new Vector2d(1, 5)};
 
