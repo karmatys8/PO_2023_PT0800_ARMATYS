@@ -2,10 +2,7 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -13,18 +10,13 @@ public class GrassField extends AbstractWorldMap{
 
     private final Map<Vector2d, WorldElement> grassMap = new HashMap<>();
 
-    private int grassCount = 0;
 
     public GrassField(int grassCount) {
-        Random rand = new Random();
         int maxVal = (int) Math.sqrt(grassCount * 10);
-        for (int i = 0; i < grassCount; i++) {
-            Vector2d newVector = new Vector2d(rand.nextInt(maxVal), rand.nextInt(maxVal));
 
-            if (grassMap.get(newVector) == null) {
-                grassMap.put(newVector, new Grass(newVector));
-                this.grassCount++;
-            } else {i--;};
+        RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(maxVal, maxVal, grassCount);
+        for(Vector2d grassPosition : randomPositionGenerator) {
+            grassMap.put(grassPosition, new Grass(grassPosition));
         }
     }
 
