@@ -55,7 +55,7 @@ public class GrassFieldTest {
 
         Vector2d[] vectors2 = {new Vector2d(0, 129), new Vector2d(4, 2), new Vector2d(1, -1),
                 new Vector2d(2, 6), new Vector2d(3, 0), new Vector2d(-1, 0), new Vector2d(-77777, 8888889),
-                new Vector2d(-1,-1), new Vector2d(443434353, 347584754), new Vector2d(2147483647, -2147483648)};
+                new Vector2d(-1,-1), new Vector2d(443434353, 347584754), new Vector2d(Integer.MAX_VALUE, Integer.MIN_VALUE)};
 
         for (Vector2d vector:vectors2) {
             testHelper(grassField, vector, true);
@@ -79,7 +79,7 @@ public class GrassFieldTest {
 
 
         Vector2d[] vectors = {new Vector2d(-10, 0), new Vector2d(0, -6), new Vector2d(1, 80), new Vector2d(-1, -4),
-                new Vector2d(-2147483648, 2147483647), new Vector2d(0, 777), new Vector2d(100, 100)};
+                new Vector2d(Integer.MIN_VALUE, Integer.MAX_VALUE), new Vector2d(0, 777), new Vector2d(100, 100)};
 
         for (Vector2d vector:vectors) {
             grassField.place(new Animal(vector));

@@ -1,8 +1,6 @@
 package agh.ics.oop.model;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
 
@@ -29,7 +27,7 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
 
     @Override
     public void move(Animal animal, MoveDirection direction) {
-        if (animals.containsValue(animal)) {
+        if (animal.equals(animals.get(animal.getPosition()))) {
             Animal animalToMove = (Animal) animals.remove(animal.getPosition());
             animalToMove.move(direction, (MoveValidator) this);
             animals.put(animalToMove.getPosition(), animalToMove);
@@ -42,7 +40,7 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
     }
 
 
-    public Map<Vector2d, WorldElement> getElements() {
-        return Collections.unmodifiableMap(animals);
+    public List<WorldElement> getElements() {
+        return Collections.unmodifiableList(new ArrayList<>(animals.values()));
     }
 }

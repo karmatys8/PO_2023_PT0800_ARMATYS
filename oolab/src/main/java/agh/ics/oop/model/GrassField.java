@@ -3,12 +3,11 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class GrassField extends AbstractWorldMap{
 
     private final Map<Vector2d, WorldElement> grassMap = new HashMap<>();
+    private final MapVisualizer mapVisualizer = new MapVisualizer(this);
 
 
     public GrassField(int grassCount) {
@@ -21,38 +20,20 @@ public class GrassField extends AbstractWorldMap{
     }
 
     public String toString() {
-        MapVisualizer currentMap = new MapVisualizer((WorldMap) this);
-
-        Integer xMax= -2147483648;
-        int yMax = xMax;
-        int xMin = 2147483647;
-        int yMin = xMin;
+        Vector2d lowerLeft = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        Vector2d upperRight = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
         for (Vector2d position: animals.keySet()) {
-            // I should DRY code here but have problem with keeping track of maxes and minimums
-            // I found it not worth it to spend more time on it without teachers help
-            int x = position.getX();
-            int y = position.getY();
-
-            if (x > xMax) xMax = x;
-            if (x < xMin) xMin = x;
-
-            if (y > yMax) yMax = y;
-            if (y < yMin) yMin = y;
+            lowerLeft = lowerLeft.upperRight(position);
+            upperRight = upperRight.lowerLeft(position);
         }
 
         for (Vector2d position: grassMap.keySet()) {
-            int x = position.getX();
-            int y = position.getY();
-
-            if (x > xMax) xMax = x;
-            if (x < xMin) xMin = x;
-
-            if (y > yMax) yMax = y;
-            if (y < yMin) yMin = y;
+            lowerLeft = lowerLeft.upperRight(position);
+            upperRight = upperRight.lowerLeft(position);
         }
 
-        return currentMap.draw(new Vector2d(xMin, yMin), new Vector2d(xMax, yMax));
+        return mapVisualizer.draw(lowerLeft, upperRight);
     }
 
     @Override
@@ -75,17 +56,12 @@ public class GrassField extends AbstractWorldMap{
     }
 
     @Override
-    public Map<Vector2d, WorldElement> getElements() {
-        Map<Vector2d, WorldElement> result = Stream.concat(animals.entrySet().stream(), grassMap.entrySet().stream())
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (value1, value2) -> new Animal(value1.getPosition())));
-        // when there are 2 objects at the same tile it means that 1st is Animal and 2nd one is grass and Animal has priority over Grass
+    public List<WorldElement> getElements() {
+        List<WorldElement> result = new ArrayList<>();
 
-        // idk how I can make it easier
-        // at least I somewhat understand what is going on here
+        result.addAll(animals.values());
+        result.addAll(grassMap.values());
 
-        return Collections.unmodifiableMap(result);
+        return result;
     }
 }
