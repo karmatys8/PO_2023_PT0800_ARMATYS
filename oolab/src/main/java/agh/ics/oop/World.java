@@ -1,30 +1,22 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.TextMap;
+import agh.ics.oop.model.Animal;
+import agh.ics.oop.model.GrassField;
+import agh.ics.oop.model.Vector2d;
 
 
 public class World {
     public static void main(String[] args) {
-        TextMap textMap = new TextMap();
-        String str1 = "Ala";
-        String str2 = "ma";
-        String str3 = "sowoniedźwiedzia";
+        GrassField grassField = new GrassField(10);
 
-        textMap.place(str1);
-        textMap.place(str2);
-        textMap.place(str3);
+        System.out.println(grassField);
 
-        System.out.println(textMap);
 
-        textMap.move(str3, MoveDirection.RIGHT);
-        textMap.move(str3, MoveDirection.FORWARD);
+        for (int i = 0; i < 10; i++) {
+            grassField.place(new Animal(new Vector2d(i, 0)));
+        }
 
-        System.out.println(textMap);
-
-        textMap.move(str2, MoveDirection.LEFT);
-        textMap.move(str2, MoveDirection.BACK);
-
-        System.out.println(textMap);
+        System.out.println(grassField);
+        grassField.getElements();
     }
 }
