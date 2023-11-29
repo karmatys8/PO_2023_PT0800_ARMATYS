@@ -24,7 +24,7 @@ public class Simulation {
                 animals.add(newAnimal);
             } catch (PositionAlreadyOccupiedException e) {
                 if (! worldMap.isOccupied(position)) { // that means that exception occurred on user input
-                    System.err.println("Illegal move specification: " + e.getMessage());
+                    System.err.println("Wrong position has been inputted: " + e.getMessage());
                     System.exit(1);
                 }
             }

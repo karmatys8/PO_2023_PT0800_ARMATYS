@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
 
+import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
 
 /**
@@ -41,4 +42,6 @@ public interface WorldMap<T, P> extends MoveValidator<P> {
      * @return animal or null if the position is not occupied.
      */
     WorldElement objectAt(P position);
+
+    Boundary getCurrentBounds();
 }

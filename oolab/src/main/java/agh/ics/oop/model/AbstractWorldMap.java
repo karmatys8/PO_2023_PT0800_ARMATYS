@@ -1,5 +1,7 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.Boundary;
+import agh.ics.oop.model.util.MapVisualizer;
 import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
 
 import java.util.*;
@@ -46,5 +48,13 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
 
     public List<WorldElement> getElements() {
         return Collections.unmodifiableList(new ArrayList<>(animals.values()));
+    }
+
+    @Override
+    public String toString() {
+        MapVisualizer currentMap = new MapVisualizer(this);
+        Boundary boundary = this.getCurrentBounds();
+
+        return currentMap.draw(boundary.lowerLeft(), boundary.upperRight());
     }
 }
