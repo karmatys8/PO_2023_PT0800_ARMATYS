@@ -16,7 +16,7 @@ public class GrassFieldTest {
         // 3 animals so at least 1 grass won't be covered
 
         for (Vector2d vector:vectors) {
-            grassField.place(new Animal(vector));
+            Utility.safePlace(grassField, new Animal(vector));
         }
 
         int occupiedCounter = 0;
@@ -31,11 +31,6 @@ public class GrassFieldTest {
         Assertions.assertEquals(3, occupiedCounter);
     }
 
-    void testHelper(GrassField grassField, Vector2d vector, boolean result) {
-        // ideally I would pass assertTrue/assertFalse instead of boolean but idk how to do it yet
-        Assertions.assertEquals(result, grassField.place(new Animal(vector)));
-    }
-
     @Test
     public void testPlace() {
         GrassField grassField = new GrassField(10);
@@ -45,11 +40,11 @@ public class GrassFieldTest {
                 new Vector2d(2, 3)};
 
         for (Vector2d vector:vectors1) {
-            testHelper(grassField, vector, true);
+            Utility.testHelper(grassField, vector, true);
         }
 
         for (Vector2d vector:vectors1) {
-            testHelper(grassField, vector, false);
+            Utility.testHelper(grassField, vector, false);
         }
 
 
@@ -58,7 +53,7 @@ public class GrassFieldTest {
                 new Vector2d(-1,-1), new Vector2d(443434353, 347584754), new Vector2d(Integer.MAX_VALUE, Integer.MIN_VALUE)};
 
         for (Vector2d vector:vectors2) {
-            testHelper(grassField, vector, true);
+            Utility.testHelper(grassField, vector, true);
         }
     }
 
@@ -82,7 +77,7 @@ public class GrassFieldTest {
                 new Vector2d(Integer.MIN_VALUE, Integer.MAX_VALUE), new Vector2d(0, 777), new Vector2d(100, 100)};
 
         for (Vector2d vector:vectors) {
-            grassField.place(new Animal(vector));
+            Utility.safePlace(grassField, new Animal(vector));
         }
 
 
@@ -106,10 +101,10 @@ public class GrassFieldTest {
         Vector2d vector4 = new Vector2d(50, 51);
         Animal animal4 = new Animal(vector4);
 
-        grassField.place(animal1);
-        grassField.place(animal2);
-        grassField.place(animal3);
-        grassField.place(animal4);
+        Utility.safePlace(grassField, animal1);
+        Utility.safePlace(grassField, animal2);
+        Utility.safePlace(grassField, animal3);
+        Utility.safePlace(grassField, animal4);
 
 
         for (int i = 1; i < 6; i++) {

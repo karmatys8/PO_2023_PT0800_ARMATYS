@@ -12,16 +12,18 @@ public class OptionsParser {
                                                         ,where n is List length, and access n values linearly */
 
         for(String arg: args) {
-            MoveDirection value = switch(arg) {
-                case "f" -> MoveDirection.FORWARD;
-                case "b" -> MoveDirection.BACK;
-                case "r" -> MoveDirection.RIGHT;
-                case "l" -> MoveDirection.LEFT;
-                default -> null;
-            };
+            try {
+                MoveDirection value = switch(arg) {
+                    case "f" -> MoveDirection.FORWARD;
+                    case "b" -> MoveDirection.BACK;
+                    case "r" -> MoveDirection.RIGHT;
+                    case "l" -> MoveDirection.LEFT;
+                    default -> throw new IllegalArgumentException(arg + " is not legal move specification");
+                };
 
-            if (value != null) {
                 newList.add(value);
+            } catch (IllegalArgumentException e) {
+                System.err.println("Illegal move specification: " + e.getMessage());
             }
         }
 
