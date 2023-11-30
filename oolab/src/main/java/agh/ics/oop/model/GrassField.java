@@ -30,8 +30,8 @@ public class GrassField extends AbstractWorldMap{
         }
 
         for (Vector2d position: grassMap.keySet()) {
-            lowerLeft = lowerLeft.upperRight(position);
-            upperRight = upperRight.lowerLeft(position);
+            lowerLeft = lowerLeft.lowerLeft(position);
+            upperRight = upperRight.upperRight(position);
         }
 
         return mapVisualizer.draw(lowerLeft, upperRight);

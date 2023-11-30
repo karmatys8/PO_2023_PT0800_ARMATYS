@@ -1,9 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.WorldMap;
+import agh.ics.oop.model.*;
 import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
 
 import java.util.ArrayList;
@@ -32,12 +29,12 @@ public class Simulation {
 
         this.moves = moves;
         this.worldMap = worldMap;
+        this.worldMap.addObserver(new ConsoleMapDisplay());
     }
 
     public void run() {
         for (int i = 0; i < moves.size(); i++) {
             worldMap.move(animals.get(i % animals.size()), moves.get(i));
-            System.out.println(worldMap);
         }
     }
 

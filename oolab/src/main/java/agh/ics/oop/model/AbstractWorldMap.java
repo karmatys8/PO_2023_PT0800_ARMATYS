@@ -9,6 +9,7 @@ import java.util.*;
 public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
 
     protected final Map<Vector2d, WorldElement> animals = new HashMap<>();
+    protected MapVisualizer mapVisualizer = new MapVisualizer(this);
 
     @Override
     public boolean isOccupied(Vector2d position) {
@@ -25,7 +26,7 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
         Vector2d position = animal.getPosition();
         if (canMoveTo(position)) {
             animals.put(position, animal);
-
+            update("animal placed on " + position);
         } else {
             throw new PositionAlreadyOccupiedException(position);
         }
@@ -35,8 +36,9 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
     public void move(Animal animal, MoveDirection direction) {
         if (animal.equals(animals.get(animal.getPosition()))) {
             Animal animalToMove = (Animal) animals.remove(animal.getPosition());
-            animalToMove.move(direction, (MoveValidator) this);
+            animalToMove.move(direction, this);
             animals.put(animalToMove.getPosition(), animalToMove);
+            update("animal moved from " + animal.getPosition() + " to " + animalToMove.getPosition());
         }
     }
 
@@ -52,9 +54,8 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
 
     @Override
     public String toString() {
-        MapVisualizer currentMap = new MapVisualizer(this);
         Boundary boundary = this.getCurrentBounds();
 
-        return currentMap.draw(boundary.lowerLeft(), boundary.upperRight());
+        return mapVisualizer.draw(boundary.lowerLeft(), boundary.upperRight());
     }
 }
