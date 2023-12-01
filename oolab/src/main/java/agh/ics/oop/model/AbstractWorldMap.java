@@ -11,6 +11,7 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
     protected final Map<Vector2d, WorldElement> animals = new HashMap<>();
     protected MapVisualizer mapVisualizer = new MapVisualizer(this);
 
+    protected List<MapChangeListener> listeners = new ArrayList<>();
     @Override
     public boolean isOccupied(Vector2d position) {
         return animals.containsKey(position);
@@ -26,7 +27,7 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
         Vector2d position = animal.getPosition();
         if (canMoveTo(position)) {
             animals.put(position, animal);
-            update("animal placed on " + position);
+            updateListeners("animal placed on " + position);
         } else {
             throw new PositionAlreadyOccupiedException(position);
         }
@@ -38,7 +39,7 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
             Animal animalToMove = (Animal) animals.remove(animal.getPosition());
             animalToMove.move(direction, this);
             animals.put(animalToMove.getPosition(), animalToMove);
-            update("animal moved from " + animal.getPosition() + " to " + animalToMove.getPosition());
+            updateListeners("animal moved from " + animal.getPosition() + " to " + animalToMove.getPosition());
         }
     }
 
@@ -57,5 +58,19 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
         Boundary boundary = this.getCurrentBounds();
 
         return mapVisualizer.draw(boundary.lowerLeft(), boundary.upperRight());
+    }
+
+    public void addObserver(MapChangeListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeObserver(MapChangeListener listener) {
+        listeners.remove(listener);
+    }
+
+    protected void updateListeners(String message) {
+        for(MapChangeListener listener: listeners) {
+            listener.mapChanged(this, message);
+        }
     }
 }

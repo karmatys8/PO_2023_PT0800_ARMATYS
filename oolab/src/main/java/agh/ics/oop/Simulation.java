@@ -16,14 +16,11 @@ public class Simulation {
     public Simulation(List<Vector2d> positions, List<MoveDirection> moves, WorldMap<Animal, Vector2d> worldMap) {
         for (Vector2d position : positions) {
             Animal newAnimal = new Animal(position);
-            try {
-                worldMap.place(newAnimal);
-                animals.add(newAnimal);
-            } catch (PositionAlreadyOccupiedException e) {
-                if (! worldMap.isOccupied(position)) { // that means that exception occurred on user input
-                    System.err.println("Wrong position has been inputted: " + e.getMessage());
-                    System.exit(1);
-                }
+            if (! worldMap.isOccupied(position)) {
+                try {
+                    worldMap.place(newAnimal);
+                    animals.add(newAnimal);
+                } catch (PositionAlreadyOccupiedException ignored) {}
             }
         }
 

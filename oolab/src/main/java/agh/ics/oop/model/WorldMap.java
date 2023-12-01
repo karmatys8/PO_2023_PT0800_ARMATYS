@@ -15,7 +15,6 @@ import java.util.List;
  */
 public interface WorldMap<T, P> extends MoveValidator<P> {
 
-    List<MapChangeListener> listeners = new ArrayList<>();
     /**
      * Place a animal on the map.
      *
@@ -52,17 +51,7 @@ public interface WorldMap<T, P> extends MoveValidator<P> {
 
 
 
-    default void addObserver(MapChangeListener listener) {
-        listeners.add(listener);
-    }
+    void addObserver(MapChangeListener listener);
 
-    default void removeObserver(MapChangeListener listener) {
-        listeners.remove(listener);
-    }
-
-    default void update(String message) {
-        for(MapChangeListener listener: listeners) {
-            listener.mapChanged(this, message);
-        }
-    }
+    void removeObserver(MapChangeListener listener);
 }
