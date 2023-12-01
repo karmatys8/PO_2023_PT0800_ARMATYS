@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
@@ -29,8 +30,8 @@ public class GrassField extends AbstractWorldMap{
         }
 
         for (Vector2d position: grassMap.keySet()) {
-            lowerLeft = lowerLeft.upperRight(position);
-            upperRight = upperRight.lowerLeft(position);
+            lowerLeft = lowerLeft.lowerLeft(position);
+            upperRight = upperRight.upperRight(position);
         }
 
         return mapVisualizer.draw(lowerLeft, upperRight);
@@ -63,5 +64,23 @@ public class GrassField extends AbstractWorldMap{
         result.addAll(grassMap.values());
 
         return result;
+    }
+
+    @Override
+    public Boundary getCurrentBounds() {
+        Vector2d lowerLeft = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        Vector2d upperRight = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
+
+        for (Vector2d position: animals.keySet()) {
+            lowerLeft = lowerLeft.upperRight(position);
+            upperRight = upperRight.lowerLeft(position);
+        }
+
+        for (Vector2d position: grassMap.keySet()) {
+            lowerLeft = lowerLeft.upperRight(position);
+            upperRight = upperRight.lowerLeft(position);
+        }
+
+        return new Boundary(lowerLeft, upperRight);
     }
 }

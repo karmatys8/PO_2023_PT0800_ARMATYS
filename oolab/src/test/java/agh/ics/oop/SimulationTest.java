@@ -50,7 +50,7 @@ public class SimulationTest {
         doTests(args3, positions3, result3, worldMap3);
 
 
-        String[] args4 = "".split(" ");
+        String[] args4 = " ".split(" ");
         List<Vector2d> positions4 = List.of(new Vector2d(1,3), new Vector2d(2,4));
         Vector2d[] result4 = {new Vector2d(1,3), new Vector2d(2, 4)};
         WorldMap<Animal, Vector2d> worldMap4 = new RectangularMap(5, 5);

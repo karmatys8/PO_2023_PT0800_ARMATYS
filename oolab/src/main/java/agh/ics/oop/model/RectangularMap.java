@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
 
+import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.MapVisualizer;
 
 
@@ -24,5 +25,10 @@ public class RectangularMap extends AbstractWorldMap {
     public String toString() {
         MapVisualizer currentMap = new MapVisualizer((WorldMap) this);
         return currentMap.draw(lowerLeftBoundary, upperRightBoundary);
+    }
+
+    @Override
+    public Boundary getCurrentBounds() {
+        return new Boundary(lowerLeftBoundary, upperRightBoundary);
     }
 }

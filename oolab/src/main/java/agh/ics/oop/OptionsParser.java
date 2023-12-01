@@ -17,12 +17,10 @@ public class OptionsParser {
                 case "b" -> MoveDirection.BACK;
                 case "r" -> MoveDirection.RIGHT;
                 case "l" -> MoveDirection.LEFT;
-                default -> null;
+                default -> throw new IllegalArgumentException(arg + " is not legal move specification");
             };
 
-            if (value != null) {
-                newList.add(value);
-            }
+            newList.add(value);
         }
 
         return newList;

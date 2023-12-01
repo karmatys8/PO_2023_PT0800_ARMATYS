@@ -1,6 +1,12 @@
 package agh.ics.oop.model;
 
 
+import agh.ics.oop.model.util.Boundary;
+import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The interface responsible for interacting with the map of the world.
  * Assumes that Vector2d and MoveDirection classes are defined.
@@ -8,13 +14,14 @@ package agh.ics.oop.model;
  * @author apohllo, idzik
  */
 public interface WorldMap<T, P> extends MoveValidator<P> {
+
     /**
      * Place a animal on the map.
      *
      * @param animal The animal to place on the map.
      * @return True if the animal was placed. The animal cannot be placed if the move is not valid.
      */
-    boolean place(T animal);
+    void place(T animal) throws PositionAlreadyOccupiedException;
 
     /**
      * Moves an animal (if it is present on the map) according to specified direction.
@@ -39,4 +46,12 @@ public interface WorldMap<T, P> extends MoveValidator<P> {
      * @return animal or null if the position is not occupied.
      */
     WorldElement objectAt(P position);
+
+    Boundary getCurrentBounds();
+
+
+
+    void addObserver(MapChangeListener listener);
+
+    void removeObserver(MapChangeListener listener);
 }
