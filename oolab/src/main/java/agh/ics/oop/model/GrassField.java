@@ -12,6 +12,7 @@ public class GrassField extends AbstractWorldMap{
 
 
     public GrassField(int grassCount) {
+        super();
         int maxVal = (int) Math.sqrt(grassCount * 10);
 
         RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(maxVal, maxVal, grassCount);
@@ -21,12 +22,12 @@ public class GrassField extends AbstractWorldMap{
     }
 
     public String toString() {
-        Vector2d lowerLeft = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        Vector2d upperRight = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Vector2d lowerLeft = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Vector2d upperRight = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
 
         for (Vector2d position: animals.keySet()) {
-            lowerLeft = lowerLeft.upperRight(position);
-            upperRight = upperRight.lowerLeft(position);
+            lowerLeft = lowerLeft.lowerLeft(position);
+            upperRight = upperRight.upperRight(position);
         }
 
         for (Vector2d position: grassMap.keySet()) {
@@ -39,10 +40,12 @@ public class GrassField extends AbstractWorldMap{
 
     @Override
     public void move(Animal animal, MoveDirection direction) {
+        Vector2d oldPosition = animal.getPosition();
         if (animals.containsValue(animal)) {
-            Animal animalToMove = (Animal) animals.remove(animal.getPosition());
-            animalToMove.move(direction, (MoveValidator) this);
+            Animal animalToMove = (Animal) animals.remove(oldPosition);
+            animalToMove.move(direction, this);
             animals.put(animalToMove.getPosition(), animalToMove);
+            updateListeners("animal moved from " + oldPosition + " to " + animalToMove.getPosition());
         }
     }
 
@@ -68,17 +71,17 @@ public class GrassField extends AbstractWorldMap{
 
     @Override
     public Boundary getCurrentBounds() {
-        Vector2d lowerLeft = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        Vector2d upperRight = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Vector2d lowerLeft = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Vector2d upperRight = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
 
         for (Vector2d position: animals.keySet()) {
-            lowerLeft = lowerLeft.upperRight(position);
-            upperRight = upperRight.lowerLeft(position);
+            lowerLeft = lowerLeft.lowerLeft(position);
+            upperRight = upperRight.upperRight(position);
         }
 
         for (Vector2d position: grassMap.keySet()) {
-            lowerLeft = lowerLeft.upperRight(position);
-            upperRight = upperRight.lowerLeft(position);
+            lowerLeft = lowerLeft.lowerLeft(position);
+            upperRight = upperRight.upperRight(position);
         }
 
         return new Boundary(lowerLeft, upperRight);

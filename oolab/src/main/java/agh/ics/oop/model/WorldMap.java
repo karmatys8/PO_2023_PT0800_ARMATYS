@@ -6,6 +6,7 @@ import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The interface responsible for interacting with the map of the world.
@@ -54,4 +55,6 @@ public interface WorldMap<T, P> extends MoveValidator<P> {
     void addObserver(MapChangeListener listener);
 
     void removeObserver(MapChangeListener listener);
+
+    UUID getId();
 }
