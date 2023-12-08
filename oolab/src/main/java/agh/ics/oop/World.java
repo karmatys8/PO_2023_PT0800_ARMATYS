@@ -35,9 +35,14 @@ public class World {
 
             SimulationEngine engine = new SimulationEngine(simulations);
             engine.runAsyncInThreadPool(); // pula wątków jest lepszym pomysłem ponieważ korzystamy z 4 rdzeni (jeżeli są dostępne)
-                                           // więc program będzie się wykonywać około 4 razy szybciej
+                                            // więc program będzie się wykonywać około 4 razy szybciej
+
+            engine.awaitSimulationsEnd();
+            
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
+            System.out.println("Engine got interrupted");
         }
 
         System.out.println("System zakończył działanie");

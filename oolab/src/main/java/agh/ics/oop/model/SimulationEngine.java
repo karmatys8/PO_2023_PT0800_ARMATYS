@@ -10,11 +10,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class SimulationEngine {
-    List<Simulation> simulations;
+    private List<Simulation> simulations;
     public SimulationEngine(List<Simulation> simulations) {
         this.simulations = simulations;
     }
-    ConsoleMapDisplay observer = new ConsoleMapDisplay();
+    private ExecutorService executor = Executors.newFixedThreadPool(4);
+    private List<Thread> threads = new ArrayList<>();
 
     public void runSync() {
         for(Simulation simulation:simulations) {
@@ -23,43 +24,27 @@ public class SimulationEngine {
     }
 
     public void runAsync() {
-        List<Thread> threads = new ArrayList<>();
-
         for(Simulation simulation:simulations) {
             Thread thread = new Thread(simulation);
             threads.add(thread);
             thread.start();
         }
-
-        awaitSimulationsEnd(threads);
     }
 
-    private void awaitSimulationsEnd(List<Thread> threads) {
-        for(Thread thread:threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException ignored) {};
-        }
-    }
-
-    private void awaitSimulationsEnd(ExecutorService executor) {
+    public void awaitSimulationsEnd() throws InterruptedException {
         executor.shutdown();
-        try {
-            if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
-                System.out.println("Unable to finish all tasks within 10 seconds.");
-            }
-        } catch (InterruptedException e) {
-            System.out.println("Executor got interrupted.");
+        if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
+            System.out.println("Unable to finish all tasks within 10 seconds.");
+        }
+
+        for(Thread thread:threads) {
+            thread.join();
         }
     }
 
     public void runAsyncInThreadPool() {
-        ExecutorService executor = Executors.newFixedThreadPool(4);
-
         for(Simulation simulation:simulations) {
             executor.execute(simulation);
         }
-
-        awaitSimulationsEnd(executor);
     }
 }

@@ -11,7 +11,6 @@ public class RectangularMap extends AbstractWorldMap {
     private final Vector2d upperRightBoundary;;
 
     public RectangularMap(int width, int height) {
-        super();
         upperRightBoundary  = new Vector2d(width - 1, height - 1);
     }
 

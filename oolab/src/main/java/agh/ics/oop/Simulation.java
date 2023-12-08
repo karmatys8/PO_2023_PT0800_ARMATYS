@@ -26,7 +26,6 @@ public class Simulation implements Runnable {
 
         this.moves = moves;
         this.worldMap = worldMap;
-//        this.worldMap.addObserver(new ConsoleMapDisplay());
     }
 
     public void run() {
