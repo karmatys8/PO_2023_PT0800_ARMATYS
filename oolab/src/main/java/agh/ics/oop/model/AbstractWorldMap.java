@@ -7,11 +7,15 @@ import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
 import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
-
+    protected UUID id;
     protected final Map<Vector2d, WorldElement> animals = new HashMap<>();
     protected MapVisualizer mapVisualizer = new MapVisualizer(this);
-
     protected List<MapChangeListener> listeners = new ArrayList<>();
+
+    public AbstractWorldMap() {
+        id = UUID.randomUUID();
+    }
+
     @Override
     public boolean isOccupied(Vector2d position) {
         return animals.containsKey(position);
@@ -35,11 +39,12 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
 
     @Override
     public void move(Animal animal, MoveDirection direction) {
-        if (animal.equals(animals.get(animal.getPosition()))) {
-            Animal animalToMove = (Animal) animals.remove(animal.getPosition());
+        Vector2d oldPosition = animal.getPosition();
+        if (animal.equals(animals.get(oldPosition))) {
+            Animal animalToMove = (Animal) animals.remove(oldPosition);
             animalToMove.move(direction, this);
             animals.put(animalToMove.getPosition(), animalToMove);
-            updateListeners("animal moved from " + animal.getPosition() + " to " + animalToMove.getPosition());
+            updateListeners("animal moved from " + oldPosition + " to " + animalToMove.getPosition());
         }
     }
 
@@ -72,5 +77,9 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
         for(MapChangeListener listener: listeners) {
             listener.mapChanged(this, message);
         }
+    }
+
+    public UUID getId() {
+        return id; // maybe I should make it unmodifiable
     }
 }
