@@ -1,7 +1,6 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
-import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class World {
                                             // więc program będzie się wykonywać około 4 razy szybciej
 
             engine.awaitSimulationsEnd();
-            
+
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         } catch (InterruptedException e) {

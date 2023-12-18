@@ -31,6 +31,11 @@ public class Simulation implements Runnable {
     public void run() {
         for (int i = 0; i < moves.size(); i++) {
             worldMap.move(animals.get(i % animals.size()), moves.get(i));
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
