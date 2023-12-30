@@ -38,20 +38,20 @@ public class MapVisualizer {
         StringBuilder builder = new StringBuilder();
         for (int i = upperRight.getY() + 1; i >= lowerLeft.getY() - 1; i--) {
             if (i == upperRight.getY() + 1) {
-                //builder.append(drawHeader(lowerLeft, upperRight));
+                builder.append(drawHeader(lowerLeft, upperRight));
             }
-            //builder.append(String.format("%3d: ", i));
+            builder.append(String.format("%3d: ", i));
             for (int j = lowerLeft.getX(); j <= upperRight.getX() + 1; j++) {
                 if (i < lowerLeft.getY() || i > upperRight.getY()) {
-                    //builder.append(drawFrame(j <= upperRight.getX()));
+                    builder.append(drawFrame(j <= upperRight.getX()));
                 } else {
-                    //builder.append(CELL_SEGMENT);
+                    builder.append(CELL_SEGMENT);
                     if (j <= upperRight.getX()) {
                         builder.append(drawObject(new Vector2d(j, i)));
                     }
                 }
             }
-            //builder.append(System.lineSeparator());
+            builder.append(System.lineSeparator());
         }
         return builder.toString();
     }

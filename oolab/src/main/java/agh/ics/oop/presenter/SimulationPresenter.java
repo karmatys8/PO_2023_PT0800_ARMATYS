@@ -66,10 +66,18 @@ public class SimulationPresenter implements MapChangeListener {
                 mapGrid.getRowConstraints().add(new RowConstraints(CELL_HEIGHT));
             }
 
-
+            int lowerLeftX = boundary.lowerLeft().x();
+            int lowerLeftY = boundary.lowerLeft().y();
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
-                    addLabel(flattenedMap.charAt(i + j * width) + "", i + 1, j + 1);
+                    WorldElement element = worldMap.objectAt(new Vector2d(lowerLeftX + i, lowerLeftY + j));
+                    String labelText;
+                    if (element == null) {
+                        labelText = " ";
+                    } else {
+                        labelText = element.toString();
+                    }
+                    addLabel(labelText, i + 1, j + 1);
                 }
             }
         }
