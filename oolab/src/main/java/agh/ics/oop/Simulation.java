@@ -28,10 +28,14 @@ public class Simulation implements Runnable {
         this.worldMap = worldMap;
     }
 
-    public void run() {
-        for (int i = 0; i < moves.size(); i++) {
-            worldMap.move(animals.get(i % animals.size()), moves.get(i));
-        }
+    public void run(){
+        try{
+            for (int i = 0; i < moves.size(); i++) {
+                worldMap.move(animals.get(i % animals.size()), moves.get(i));
+
+                Thread.sleep(500);
+            }
+        } catch (InterruptedException ignored) {}
     }
 
     public List<Animal> getAnimals() {
