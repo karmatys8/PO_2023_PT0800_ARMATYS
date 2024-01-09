@@ -4,6 +4,8 @@ import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GrassField extends AbstractWorldMap{
 
@@ -50,23 +52,15 @@ public class GrassField extends AbstractWorldMap{
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        WorldElement animal = super.objectAt(position);
-        if (animal != null) {
-            return animal;
-        } else {
-            return grassMap.get(position);
-        }
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        return super.objectAt(position)
+                .or(() -> Optional.ofNullable(grassMap.get(position)));
     }
 
     @Override
     public List<WorldElement> getElements() {
-        List<WorldElement> result = new ArrayList<>();
-
-        result.addAll(animals.values());
-        result.addAll(grassMap.values());
-
-        return result;
+        return Stream.concat(animals.values().stream(), grassMap.values().stream())
+                .collect(Collectors.toList());
     }
 
     @Override

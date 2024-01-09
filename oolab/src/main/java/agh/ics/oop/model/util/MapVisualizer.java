@@ -75,10 +75,8 @@ public class MapVisualizer {
     }
 
     private String drawObject(Vector2d currentPosition) {
-        Object object = this.map.objectAt(currentPosition);
-        if (object != null) {
-            return object.toString();
-        }
-        return EMPTY_CELL;
+        return map.objectAt(currentPosition)
+                .map(Object::toString)
+                .orElse(EMPTY_CELL);
     }
 }

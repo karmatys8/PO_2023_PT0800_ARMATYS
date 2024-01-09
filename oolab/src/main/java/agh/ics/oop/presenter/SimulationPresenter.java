@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 public class SimulationPresenter implements MapChangeListener {
 
@@ -79,13 +80,8 @@ public class SimulationPresenter implements MapChangeListener {
             int lowerLeftY = boundary.lowerLeft().y();
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
-                    WorldElement element = worldMap.objectAt(new Vector2d(lowerLeftX + i, lowerLeftY + j));
-                    String labelText;
-                    if (element == null) {
-                        labelText = " ";
-                    } else {
-                        labelText = element.toString();
-                    }
+                    Optional<WorldElement> optionalElement = worldMap.objectAt(new Vector2d(lowerLeftX + i, lowerLeftY + j));
+                    String labelText = optionalElement.map(Object::toString).orElse(" ");
                     addLabel(labelText, i + 1, j + 1);
                 }
             }
