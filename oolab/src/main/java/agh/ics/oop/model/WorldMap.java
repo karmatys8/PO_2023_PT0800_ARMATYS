@@ -5,6 +5,7 @@ import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,4 +58,6 @@ public interface WorldMap<T, P> extends MoveValidator<P> {
     void removeObserver(MapChangeListener listener);
 
     UUID getId();
+
+    Collection<WorldElement> getOrderedAnimals();
 }

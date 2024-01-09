@@ -82,4 +82,14 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
     public UUID getId() {
         return id; // maybe I should make it unmodifiable
     }
+
+    public Collection<WorldElement> getOrderedAnimals() {
+        List<WorldElement> animalList = new ArrayList<>(animals.values());
+
+        Comparator<WorldElement> positionComparator = Comparator.comparing((WorldElement animal) -> animal.getPosition().getX())
+                .thenComparing((WorldElement animal) -> animal.getPosition().getY());
+        animalList.sort(positionComparator);
+
+        return animalList;
+    }
 }

@@ -14,6 +14,8 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class SimulationPresenter implements MapChangeListener {
@@ -33,6 +35,13 @@ public class SimulationPresenter implements MapChangeListener {
         }
 
         map.addObserver(this);
+        map.addObserver((worldMap, message) -> Platform.runLater(() -> {
+            drawMap();
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            moveLabel.setText(dtf.format(now) + " " + message);
+        }));
         worldMap = map;
     }
 
