@@ -5,6 +5,7 @@ import agh.ics.oop.model.util.MapVisualizer;
 import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
     protected UUID id;
@@ -49,8 +50,8 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        return animals.get(position);
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        return Optional.ofNullable(animals.get(position));
     }
 
 
@@ -81,5 +82,12 @@ public abstract class AbstractWorldMap implements WorldMap<Animal, Vector2d> {
 
     public UUID getId() {
         return id; // maybe I should make it unmodifiable
+    }
+
+    public Collection<WorldElement> getOrderedAnimals() {
+        return animals.values().stream()
+                .sorted(Comparator.comparing((WorldElement animal) -> animal.getPosition().getX())
+                        .thenComparing((WorldElement animal) -> animal.getPosition().getY()))
+                .collect(Collectors.toList());
     }
 }

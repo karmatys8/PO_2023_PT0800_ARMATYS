@@ -64,7 +64,7 @@ public class GrassFieldTest {
         int grassCounter = 0;
         for (int i = 0; i < 30; i++) {
             for (int j = 0; j < 30; j++) {
-                if (grassField.objectAt(new Vector2d(i, j)) != null) {
+                if (grassField.objectAt(new Vector2d(i, j)).isPresent()) {
                     grassCounter++;
                 }
             }
@@ -82,7 +82,7 @@ public class GrassFieldTest {
 
 
         for (Vector2d vector : vectors) {
-            Assertions.assertNotNull(grassField.objectAt(vector));
+            Assertions.assertTrue(grassField.objectAt(vector).isPresent());
         }
     }
 
