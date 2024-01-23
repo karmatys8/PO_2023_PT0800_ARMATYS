@@ -1,3 +1,4 @@
+import java.lang.RuntimeException
 import java.util.*
 import kotlin.random.Random;
 
@@ -17,7 +18,8 @@ class BouncyMap(private val width: Int, private val height: Int) : WorldMap<Anim
         }
 
         if (animalsMap.containsKey(animalPosition)) {
-            handleCollision(animal)
+            val position = handleCollision(animal)
+            animalsMap[position] = animal
         } else {
             animalsMap[animalPosition] = animal
         }
@@ -28,7 +30,7 @@ class BouncyMap(private val width: Int, private val height: Int) : WorldMap<Anim
         animal.move(direction, this)
         if (animal.getPosition() != oldPosition) {
             animalsMap.remove(oldPosition)
-            animalsMap[animal.getPosition()] = animal
+            place(animal)
         }
     }
 
@@ -44,13 +46,8 @@ class BouncyMap(private val width: Int, private val height: Int) : WorldMap<Anim
         return animalsMap.values.toList()
     }
 
-    private fun handleCollision(animal: Animal) {
-        val newPosition = findFreePosition(animal.getPosition())
-        animal.setPosition(newPosition)
-        place(animal)
-    }
-
-    private fun findFreePosition(position: Vector2d): Vector2d {
+    private fun handleCollision(animal: Animal): Vector2d {
+        val position = animal.getPosition()
         val shuffledMoves = possibleMoves.shuffled()
 
         for (move in shuffledMoves) {
@@ -60,7 +57,15 @@ class BouncyMap(private val width: Int, private val height: Int) : WorldMap<Anim
             }
         }
 
-        // If all adjacent positions are occupied, return a random position within the map
-        return Vector2d(Random.nextInt(width), Random.nextInt(height))
+        // if no neighbouring tiles are available we begin bouncing (generating position)
+        var newPosition = animalsMap.randomFreePosition(Vector2d(width, height))
+        if (newPosition == null) {
+            newPosition = animalsMap.randomPosition()
+        }
+        if (newPosition == null) {
+            throw RuntimeException("Animal got null as placement")
+        }
+
+        return newPosition
     }
 }
