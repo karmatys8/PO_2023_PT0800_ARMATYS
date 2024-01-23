@@ -24,18 +24,11 @@ class BouncyMap(private val width: Int, private val height: Int) : WorldMap<Anim
     }
 
     override fun move(animal: Animal, direction: MoveDirection) {
-        val animalPosition = animal.getPosition()
-        val newPosition = when (direction) {
-            MoveDirection.RIGHT -> animalPosition + Vector2d(1, 0)
-            MoveDirection.LEFT -> animalPosition + Vector2d(-1, 0)
-            MoveDirection.FORWARD -> animalPosition + animal.getOrientation().toUnitVector()
-            MoveDirection.BACK -> animalPosition - animal.getOrientation().toUnitVector()
-        }
-
-        if (canMoveTo(newPosition)) {
-            animalsMap.remove(animalPosition)
-            animal.setPosition(newPosition)
-            place(animal)
+        val oldPosition = animal.getPosition()
+        animal.move(direction, this)
+        if (animal.getPosition() != oldPosition) {
+            animalsMap.remove(oldPosition)
+            animalsMap[animal.getPosition()] = animal
         }
     }
 
